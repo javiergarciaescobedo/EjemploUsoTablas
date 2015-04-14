@@ -16,8 +16,33 @@ public class Main extends javax.swing.JFrame {
      */
     public Main() {
         initComponents();
+        mostrarDatos();
     }
 
+    public void mostrarDatos() {
+        Categoria categoria;
+        CategoriasContenedor listaCategorias = new CategoriasContenedor();
+
+        categoria = new Categoria(1, "Categoría 1");
+        listaCategorias.getListaCategorias().add(categoria);
+        categoria = new Categoria(2, "Categoría 2");
+        listaCategorias.getListaCategorias().add(categoria);
+        categoria = new Categoria(3, "Categoría 3");
+        listaCategorias.getListaCategorias().add(categoria);
+
+        Producto producto;
+        ProductosContenedor productosContenedor = new ProductosContenedor();
+
+        producto = new Producto(1, "Prod1", 111.11, listaCategorias.getCategoriaById(2));
+        productosContenedor.getListaProductos().add(producto);
+        producto = new Producto(2, "Prod2", 222.22, listaCategorias.getCategoriaById(3));
+        productosContenedor.getListaProductos().add(producto);
+        producto = new Producto(3, "Prod3", 333.33, listaCategorias.getCategoriaById(1));
+        productosContenedor.getListaProductos().add(producto);
+        
+        jTable1.setModel(new ProductosTableModel(productosContenedor));
+    }
+    
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -27,16 +52,23 @@ public class Main extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jButton1 = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
-        jButton1.setText("jButton1");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
             }
-        });
+        ));
+        jScrollPane1.setViewportView(jTable1);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -44,40 +76,19 @@ public class Main extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
-                .addContainerGap(240, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 430, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jButton1)
-                .addContainerGap(176, Short.MAX_VALUE))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 336, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        Categoria categoria;
-        categoria = new Categoria(1, "Categoría 1");
-        ListaCategorias listaCategorias = new ListaCategorias();
-        listaCategorias.getListaCategorias().add(categoria);
-        categoria = new Categoria(2, "Categoría 2");
-        listaCategorias.getListaCategorias().add(categoria);
-        categoria = new Categoria(3, "Categoría 3");
-        listaCategorias.getListaCategorias().add(categoria);
-
-        Producto producto;
-        producto = new Producto(1, "Prod1", 111.11, listaCategorias.getCategoriaById(2));
-        ListaProductos listaProductos = new ListaProductos();
-        listaProductos.getListaProductos().add(producto);
-        producto = new Producto(2, "Prod2", 222.22, listaCategorias.getCategoriaById(3));
-        listaProductos.getListaProductos().add(producto);
-        producto = new Producto(3, "Prod3", 333.33, listaCategorias.getCategoriaById(1));
-        listaProductos.getListaProductos().add(producto);
-        
-    }//GEN-LAST:event_jButton1ActionPerformed
 
     /**
      * @param args the command line arguments
@@ -115,6 +126,7 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable jTable1;
     // End of variables declaration//GEN-END:variables
 }

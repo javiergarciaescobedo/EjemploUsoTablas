@@ -2,7 +2,7 @@ package ejemplousotablas;
 
 import java.util.ArrayList;
 
-public class ListaProductos {
+public class ProductosContenedor {
 
     private ArrayList<Producto> listaProductos = new ArrayList();
 

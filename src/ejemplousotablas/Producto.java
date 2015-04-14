@@ -40,6 +40,14 @@ public class Producto {
     public void setPrecio(double precio) {
         this.precio = precio;
     }
+
+    public Categoria getCategoria() {
+        return categoria;
+    }
+
+    public void setCategoria(Categoria categoria) {
+        this.categoria = categoria;
+    }
     
     
     
