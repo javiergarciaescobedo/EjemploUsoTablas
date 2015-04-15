@@ -41,6 +41,9 @@ public class Main extends javax.swing.JFrame {
         productosContenedor.getListaProductos().add(producto);
         
         jTable1.setModel(new ProductosTableModel(productosContenedor));
+        
+        jTable1.getColumnModel().getColumn(2).setCellRenderer(new PrecioRenderer());
+        
     }
     
     /**
