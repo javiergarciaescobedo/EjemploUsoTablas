@@ -1,5 +1,7 @@
-package ejemplousotablas;
+package model;
 
+import data.Producto;
+import data.ProductosContenedor;
 import javax.swing.table.AbstractTableModel;
 
 public class ProductosTableModel extends AbstractTableModel {

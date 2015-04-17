@@ -5,15 +5,26 @@
  */
 package ejemplousotablas;
 
+import model.ProductosTableModel;
+import data.Producto;
+import data.Categoria;
+import data.CategoriasContenedor;
+import data.ProductosContenedor;
+import renderer.PrecioCellRenderer;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
+import renderer.CategoriasListRenderer;
 
 /**
  *
  * @author Javier García Escobedo
  */
 public class Main extends javax.swing.JFrame {
+
+    private CategoriasContenedor categoriasContenedor = new CategoriasContenedor();
+    private ProductosContenedor productosContenedor = new ProductosContenedor();
 
     /**
      * Creates new form Main
@@ -30,10 +41,20 @@ public class Main extends javax.swing.JFrame {
                 }
             }
         );
+        
+        cargarDatos();        
+        
+        // Rellenar combobox de categorías
+        jComboBox1.setModel(new DefaultComboBoxModel(categoriasContenedor.getListaCategorias().toArray()));
+        jComboBox1.setRenderer(new CategoriasListRenderer());
+        
+        // Rellenar tabla con datos
+        jTable1.setModel(new ProductosTableModel(productosContenedor));
+        // Aplicar renderer a la columna del precio
+        jTable1.getColumnModel().getColumn(2).setCellRenderer(new PrecioCellRenderer());
 
-        mostrarDatos();        
     }
-    
+        
     public void mostrarDetalleRegistroSeleccionado() {
         int indexSelectedRow = jTable1.getSelectedRow();
         if(indexSelectedRow < 0) {
@@ -43,31 +64,25 @@ public class Main extends javax.swing.JFrame {
         }
     }
     
-    public void mostrarDatos() {
+    public void cargarDatos() {
         Categoria categoria;
-        CategoriasContenedor listaCategorias = new CategoriasContenedor();
 
         categoria = new Categoria(1, "Categoría 1");
-        listaCategorias.getListaCategorias().add(categoria);
+        categoriasContenedor.getListaCategorias().add(categoria);
         categoria = new Categoria(2, "Categoría 2");
-        listaCategorias.getListaCategorias().add(categoria);
+        categoriasContenedor.getListaCategorias().add(categoria);
         categoria = new Categoria(3, "Categoría 3");
-        listaCategorias.getListaCategorias().add(categoria);
+        categoriasContenedor.getListaCategorias().add(categoria);
 
         Producto producto;
-        ProductosContenedor productosContenedor = new ProductosContenedor();
 
-        producto = new Producto(1, "Prod1", 111.11, listaCategorias.getCategoriaById(2));
+        producto = new Producto(1, "Prod1", 111.11, categoriasContenedor.getCategoriaById(2));
         productosContenedor.getListaProductos().add(producto);
-        producto = new Producto(2, "Prod2", 222.22, listaCategorias.getCategoriaById(3));
+        producto = new Producto(2, "Prod2", 222.22, categoriasContenedor.getCategoriaById(3));
         productosContenedor.getListaProductos().add(producto);
-        producto = new Producto(3, "Prod3", 333.33, listaCategorias.getCategoriaById(1));
+        producto = new Producto(3, "Prod3", 333.33, categoriasContenedor.getCategoriaById(1));
         productosContenedor.getListaProductos().add(producto);
         
-        jTable1.setModel(new ProductosTableModel(productosContenedor));
-        
-        // Aplicar renderer a la columna del precio
-        jTable1.getColumnModel().getColumn(2).setCellRenderer(new PrecioRenderer());
     }
     
     
@@ -86,6 +101,8 @@ public class Main extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jTextField1 = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox();
+        jLabel3 = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
 
@@ -106,6 +123,10 @@ public class Main extends javax.swing.JFrame {
 
         jLabel2.setText("Registro seleccionado:");
 
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jLabel3.setText("Categoría:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -116,7 +137,9 @@ public class Main extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2))
+                    .addComponent(jLabel2)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel3))
                 .addContainerGap(137, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -130,6 +153,10 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(jLabel2)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -173,8 +200,10 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;

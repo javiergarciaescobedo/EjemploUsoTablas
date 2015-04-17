@@ -1,9 +1,9 @@
-package ejemplousotablas;
+package renderer;
 
 import java.text.NumberFormat;
 import javax.swing.table.DefaultTableCellRenderer;
 
-public class PrecioRenderer extends DefaultTableCellRenderer {
+public class PrecioCellRenderer extends DefaultTableCellRenderer {
 
     @Override
     protected void setValue(Object value) {

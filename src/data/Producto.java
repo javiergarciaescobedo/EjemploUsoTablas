@@ -1,4 +1,4 @@
-package ejemplousotablas;
+package data;
 
 public class Producto {
 

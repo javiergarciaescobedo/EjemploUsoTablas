@@ -1,4 +1,4 @@
-package ejemplousotablas;
+package data;
 
 public class Categoria {
 
@@ -27,8 +27,6 @@ public class Categoria {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-    
-    
+    }    
     
 }
