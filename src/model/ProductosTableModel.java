@@ -1,5 +1,6 @@
 package model;
 
+import data.Categoria;
 import data.Producto;
 import data.ProductosContenedor;
 import javax.swing.table.AbstractTableModel;
@@ -54,7 +55,35 @@ public class ProductosTableModel extends AbstractTableModel {
                 return null;
         }
     }    
-    
-    
-    
+
+    @Override
+    public boolean isCellEditable(int rowIndex, int columnIndex) {
+        switch(columnIndex) {
+            case 0:
+            case 3:
+                return false;
+            default:
+                return true;
+        }
+    }
+
+    @Override
+    public void setValueAt(Object aValue, int rowIndex, int columnIndex) {
+        Producto producto = productosContenedor.getListaProductos().get(rowIndex);
+        switch(columnIndex) {
+            case 0:
+                producto.setId(Integer.valueOf((String)aValue));
+                break;
+            case 1:
+                producto.setNombre((String)aValue);
+                break;
+            case 2:
+                producto.setPrecio(Double.valueOf((String)aValue));
+                break;
+            case 3:
+                producto.setCategoria((Categoria)aValue);
+                break;
+        }        
+    }
+        
 }

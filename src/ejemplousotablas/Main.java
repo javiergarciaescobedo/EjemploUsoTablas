@@ -25,7 +25,8 @@ public class Main extends javax.swing.JFrame {
 
     private CategoriasContenedor categoriasContenedor = new CategoriasContenedor();
     private ProductosContenedor productosContenedor = new ProductosContenedor();
-
+    private ProductosTableModel productosTableModel;
+    
     /**
      * Creates new form Main
      */
@@ -49,10 +50,10 @@ public class Main extends javax.swing.JFrame {
         jComboBox1.setRenderer(new CategoriasListRenderer());
         
         // Rellenar tabla con datos
-        jTable1.setModel(new ProductosTableModel(productosContenedor));
+        productosTableModel = new ProductosTableModel(productosContenedor);
+        jTable1.setModel(productosTableModel);
         // Aplicar renderer a la columna del precio
         jTable1.getColumnModel().getColumn(2).setCellRenderer(new PrecioCellRenderer());
-
     }
         
     public void mostrarDetalleRegistroSeleccionado() {
@@ -103,6 +104,7 @@ public class Main extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jComboBox1 = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
+        jButtonGuardar = new javax.swing.JButton();
 
         jLabel1.setText("jLabel1");
 
@@ -127,6 +129,13 @@ public class Main extends javax.swing.JFrame {
 
         jLabel3.setText("Categoría:");
 
+        jButtonGuardar.setText("Guardar");
+        jButtonGuardar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButtonGuardarActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -139,7 +148,8 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 117, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3))
+                    .addComponent(jLabel3)
+                    .addComponent(jButtonGuardar))
                 .addContainerGap(137, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -157,12 +167,21 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButtonGuardar)))
                 .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void jButtonGuardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonGuardarActionPerformed
+        // Aquí hay que actualizar los datos del objeto obtenido del ArrayList
+        //  a partir de los datos que se encuentren en pantalla
+
+        // Actualizar en la tabla los datos modificados
+        productosTableModel.fireTableRowsUpdated(jTable1.getSelectedRow(), jTable1.getSelectedRow());
+    }//GEN-LAST:event_jButtonGuardarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -200,6 +219,7 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButtonGuardar;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
