@@ -16,6 +16,7 @@ import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
 import renderer.CategoriasListRenderer;
+import renderer.MaxLengthDocument;
 
 /**
  *
@@ -54,6 +55,10 @@ public class Main extends javax.swing.JFrame {
         jTable1.setModel(productosTableModel);
         // Aplicar renderer a la columna del precio
         jTable1.getColumnModel().getColumn(2).setCellRenderer(new PrecioCellRenderer());
+        
+        // Asignar un document personalizado para limitar el número de caracteres
+        //  en función del número de columnas indicado al JTextField
+        jTextField2.setDocument(new MaxLengthDocument(jTextField2.getColumns()));
     }
         
     public void mostrarDetalleRegistroSeleccionado() {
@@ -105,6 +110,7 @@ public class Main extends javax.swing.JFrame {
         jComboBox1 = new javax.swing.JComboBox();
         jLabel3 = new javax.swing.JLabel();
         jButtonGuardar = new javax.swing.JButton();
+        jTextField2 = new javax.swing.JTextField();
 
         jLabel1.setText("jLabel1");
 
@@ -136,6 +142,9 @@ public class Main extends javax.swing.JFrame {
             }
         });
 
+        jTextField2.setColumns(20);
+        jTextField2.setText("jTextField2");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -149,8 +158,9 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jButtonGuardar))
-                .addContainerGap(137, Short.MAX_VALUE))
+                    .addComponent(jButtonGuardar)
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(88, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -167,6 +177,8 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(jLabel3)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jButtonGuardar)))
                 .addContainerGap())
@@ -227,5 +239,6 @@ public class Main extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
+    private javax.swing.JTextField jTextField2;
     // End of variables declaration//GEN-END:variables
 }
