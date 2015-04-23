@@ -10,8 +10,11 @@ import data.Producto;
 import data.Categoria;
 import data.CategoriasContenedor;
 import data.ProductosContenedor;
+import java.math.BigDecimal;
+import java.math.RoundingMode;
 import renderer.PrecioCellRenderer;
 import javax.swing.DefaultComboBoxModel;
+import javax.swing.JOptionPane;
 import javax.swing.ListSelectionModel;
 import javax.swing.event.ListSelectionEvent;
 import javax.swing.event.ListSelectionListener;
@@ -111,6 +114,9 @@ public class Main extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         jButtonGuardar = new javax.swing.JButton();
         jTextField2 = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jTextFieldPrice = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
 
         jLabel1.setText("jLabel1");
 
@@ -145,6 +151,22 @@ public class Main extends javax.swing.JFrame {
         jTextField2.setColumns(20);
         jTextField2.setText("jTextField2");
 
+        jButton1.setText("jButton1");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jTextFieldPrice.setColumns(10);
+        jTextFieldPrice.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                jTextFieldPriceFocusLost(evt);
+            }
+        });
+
+        jLabel4.setText("Precio:");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -158,8 +180,15 @@ public class Main extends javax.swing.JFrame {
                     .addComponent(jLabel2)
                     .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3)
-                    .addComponent(jButtonGuardar)
-                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButtonGuardar)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1))
+                    .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jTextFieldPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(88, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -179,8 +208,14 @@ public class Main extends javax.swing.JFrame {
                         .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(21, 21, 21)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel4)
+                            .addComponent(jTextFieldPrice, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jButtonGuardar)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonGuardar)
+                            .addComponent(jButton1))))
                 .addContainerGap())
         );
 
@@ -194,6 +229,47 @@ public class Main extends javax.swing.JFrame {
         // Actualizar en la tabla los datos modificados
         productosTableModel.fireTableRowsUpdated(jTable1.getSelectedRow(), jTable1.getSelectedRow());
     }//GEN-LAST:event_jButtonGuardarActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jTextFieldPriceFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_jTextFieldPriceFocusLost
+        final int PRECISION = 5;    // Number of total digits
+        final int SCALE = 2;        // Number of decimal digits
+        boolean error = false;
+        
+        if(!jTextFieldPrice.getText().isEmpty()) {
+            try {
+                // Convert written text to numeric type
+                BigDecimal bigDecimal = new BigDecimal(jTextFieldPrice.getText());
+                // Round to scale decimals
+                bigDecimal = bigDecimal.setScale(SCALE, RoundingMode.HALF_UP);
+                // Show number rounded
+                jTextFieldPrice.setText(bigDecimal.toString());
+                // Check if lenth is greater than limit 
+                if(jTextFieldPrice.getText().length() > PRECISION + 1) {
+                    JOptionPane.showMessageDialog(this, 
+                            "Valor demasiado largo.\n" +
+                            "Debe tener un máximo de " + PRECISION + " dígitos\n" +
+                            "incluyendo  " + SCALE + " decimales\n",
+                        "Atención", JOptionPane.WARNING_MESSAGE
+                    );
+                    error = true;
+                }
+            } catch(NumberFormatException ex) {
+                JOptionPane.showMessageDialog(this, "Valor no numérico", 
+                        "Atención", JOptionPane.WARNING_MESSAGE);
+                error = true;
+            }
+        }
+        if(error) {
+            // Stay on JTextField and preselect text
+            jTextFieldPrice.requestFocus();
+            jTextFieldPrice.setSelectionStart(0);
+            jTextFieldPrice.setSelectionEnd(jTextFieldPrice.getText().length());
+        }
+    }//GEN-LAST:event_jTextFieldPriceFocusLost
 
     /**
      * @param args the command line arguments
@@ -231,14 +307,17 @@ public class Main extends javax.swing.JFrame {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1;
     private javax.swing.JButton jButtonGuardar;
     private javax.swing.JComboBox jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable1;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField2;
+    private javax.swing.JTextField jTextFieldPrice;
     // End of variables declaration//GEN-END:variables
 }
