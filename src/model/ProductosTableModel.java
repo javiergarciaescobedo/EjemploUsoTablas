@@ -60,7 +60,6 @@ public class ProductosTableModel extends AbstractTableModel {
     public boolean isCellEditable(int rowIndex, int columnIndex) {
         switch(columnIndex) {
             case 0:
-            case 3:
                 return false;
             default:
                 return true;
