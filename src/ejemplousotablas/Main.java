@@ -67,20 +67,20 @@ public class Main extends javax.swing.JFrame {
         //  en función del número de columnas indicado al JTextField
         jTextField2.setDocument(new MaxLengthDocument(jTextField2.getColumns()));
         
-        //Crear un ComboBox para que sea el editor de la columna de Cate
-        TableColumn categoriaColumn = jTable1.getColumnModel().getColumn(3);
-        JComboBox comboBoxCellCategoria = new JComboBox();
-        comboBoxCellCategoria.setModel(new DefaultComboBoxModel(categoriasContenedor.getListaCategorias().toArray()));
-        comboBoxCellCategoria.setRenderer(new CategoriasListRenderer());
-        categoriaColumn.setCellEditor(new DefaultCellEditor(comboBoxCellCategoria));
-        //Aplicar un renderer para mostrar los objetos Categoria en la tabla
-        jTable1.getColumnModel().getColumn(3).setCellRenderer(new DefaultTableCellRenderer() {
-            @Override
-            protected void setValue(Object value) {
-                Categoria categoria = (Categoria)value;
-                setText(categoria.getNombre());
-            }
-        });
+        //Crear un ComboBox para que sea el editor de la columna de Categorías 
+        TableColumn categoriaColumn = jTable1.getColumnModel().getColumn(3); 
+        JComboBox comboBoxCellCategoria = new JComboBox(); 
+        comboBoxCellCategoria.setModel(new DefaultComboBoxModel(categoriasContenedor.getListaCategorias().toArray())); 
+        comboBoxCellCategoria.setRenderer(new CategoriasListRenderer()); 
+        categoriaColumn.setCellEditor(new DefaultCellEditor(comboBoxCellCategoria)); 
+        //Aplicar un renderer para mostrar los objetos Categoria en la tabla 
+        jTable1.getColumnModel().getColumn(3).setCellRenderer(new DefaultTableCellRenderer() { 
+            @Override 
+            protected void setValue(Object value) { 
+                Categoria categoria = (Categoria)value; 
+                setText(categoria.getNombre()); 
+            } 
+        }); 
         
         
     }
